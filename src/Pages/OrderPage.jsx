@@ -42,9 +42,7 @@ const OrderPage = ({ match, history }) => {
 
    const fetchPayPalClientId = async () => {
   try {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/config/paypal`
-    )
+   const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/config/paypal`)
     if (typeof data === 'string' && data.startsWith('A')) {
       setClientId(data)
       setSdkReady(true)
