@@ -40,11 +40,22 @@ const OrderPage = ({ match, history }) => {
       history.push('/login')
     }
 
-    const fetchPayPalClientId = async () => {
-      const { data } = await axios.get('/api/config/paypal')
+   const fetchPayPalClientId = async () => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/config/paypal`
+    )
+    if (typeof data === 'string' && data.startsWith('A')) {
       setClientId(data)
       setSdkReady(true)
+    } else {
+      console.error('Invalid PayPal Client ID:', data)
     }
+  } catch (error) {
+    console.error('Failed to load PayPal client ID:', error)
+  }
+}
+
 
     if (!order || successPay || successDeliver || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET })
@@ -134,7 +145,7 @@ const OrderPage = ({ match, history }) => {
               <ListGroup.Item><Row><Col>Total</Col><Col>${order.totalPrice}</Col></Row></ListGroup.Item>
 
               {/* Only show PayPal to non-admin users */}
-              {userInfo && !userInfo.isAdmin && !order.isPaid && sdkReady && (
+              {userInfo && !userInfo.isAdmin && !order.isPaid && sdkReady && clientId && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   <PayPalScriptProvider options={{ 'client-id': clientId }}>
