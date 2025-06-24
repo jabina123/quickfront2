@@ -1,5 +1,5 @@
-const axios = require('axios');
-const {
+import axios from 'axios';
+import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
@@ -18,20 +18,22 @@ const {
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_REQUEST,
-} = require('../constants/orderConstants');
+} from '../constants/orderConstants';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_CREATE_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}` 
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
@@ -52,11 +54,13 @@ const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-const getOrderDetails = (id) => async (dispatch, getState) => {
+export const getOrderDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
       headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -79,11 +83,13 @@ const getOrderDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-const payOrder = (orderId, paymentResult) => async (dispatch, getState) => {
+export const payOrder = (orderId, paymentResult) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_PAY_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
@@ -113,11 +119,13 @@ const payOrder = (orderId, paymentResult) => async (dispatch, getState) => {
   }
 };
 
-const deliverOrder = (order) => async (dispatch, getState) => {
+export const deliverOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DELIVER_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
       headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -144,11 +152,13 @@ const deliverOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-const listMyOrders = () => async (dispatch, getState) => {
+export const listMyOrders = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_LIST_MY_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
       headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -171,11 +181,13 @@ const listMyOrders = () => async (dispatch, getState) => {
   }
 };
 
-const listOrders = () => async (dispatch, getState) => {
+export const listOrders = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
       headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -196,13 +208,4 @@ const listOrders = () => async (dispatch, getState) => {
           : error.message,
     });
   }
-};
-
-module.exports = {
-  createOrder,
-  getOrderDetails,
-  payOrder,
-  deliverOrder,
-  listMyOrders,
-  listOrders,
 };
