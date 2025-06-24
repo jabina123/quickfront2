@@ -20,7 +20,7 @@ import {
   ORDER_DELIVER_REQUEST,
 } from '../constants/orderConstants';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {

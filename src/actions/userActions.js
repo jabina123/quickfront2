@@ -28,7 +28,7 @@ import {
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
 
 export const login = (email, password) => async (dispatch) => {
   try {

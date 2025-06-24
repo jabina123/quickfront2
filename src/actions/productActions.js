@@ -23,7 +23,8 @@ import {
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants.js';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
+
 
 export const listProducts = (keyword = '', pageNumber = '') => async (dispatch) => {
   try {
