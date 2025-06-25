@@ -150,9 +150,12 @@ const OrderPage = ({ match, history }) => {
                   <PayPalScriptProvider options={{ 'client-id': clientId }}>
                     <PayPalButtons
                       amount={order.totalPrice}
-                      onApprove={(data, actions) =>
-                        actions.order.capture().then(successPaymentHandler)
-                      }
+                onApprove={(data, actions) =>
+  actions.order.capture().then((details) => {
+    successPaymentHandler(details, data)
+  })
+}
+
                     />
                   </PayPalScriptProvider>
                 </ListGroup.Item>
